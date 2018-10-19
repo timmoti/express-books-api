@@ -71,6 +71,6 @@ test('GET /books should display all books ', async () => {
 test('GET / should display welcome message', async () => {
   const response = await request(app).get('/');
 
-  expect(response.status).toBe(200);
+  expect(response.status).toBe(201);
   expect(response.body.message).toEqual('hello express-books-api');
 });
