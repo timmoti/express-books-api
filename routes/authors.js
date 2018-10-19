@@ -7,7 +7,7 @@ const Book = require('../models/book');
 router.get('/', async (req, res, next) => {
   try {
     const result = await Author.find();
-    res.json({ message: 'respond with all Authors', result });
+    res.json(result);
   } catch (error) {
     next(error);
   }
@@ -40,7 +40,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-//Update author details
+//Update author details by name
 router.put('/:name', async (req, res, next) => {
   try {
     const result = await Author.findOneAndUpdate(
@@ -56,7 +56,7 @@ router.put('/:name', async (req, res, next) => {
   }
 });
 
-//Delete author from database
+//Delete author from database by name
 router.delete('/:name', async (req, res, next) => {
   try {
     const result = await Author.findOneAndDelete({ name: req.params.name });
@@ -70,7 +70,6 @@ router.delete('/:name', async (req, res, next) => {
 router.get('/:name', async (req, res, next) => {
   try {
     const author = await Author.find({ name: req.params.name });
-    console.log(author);
     const books = await Book.find({ author: author[0].id });
     res.json({
       author: author,

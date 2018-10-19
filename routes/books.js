@@ -2,25 +2,27 @@ const express = require('express');
 const router = express.Router();
 const Book = require('../models/book');
 
-/* GET books listing. */
+//Get all books in database
 router.get('/', async (req, res, next) => {
   try {
     const result = await Book.find().populate('author');
-    res.json({ message: 'respond with all books', result });
+    res.json(result);
   } catch (error) {
     next(error);
   }
 });
 
+//Get book by id from database
 router.get('/:id', async (req, res, next) => {
   try {
     const result = await Book.findById(req.params.id);
-    res.json({ message: `get book with id ${req.params.id}`, result });
+    res.json(result);
   } catch (error) {
     next(error);
   }
 });
 
+//Create a new book
 router.post('/', async (req, res, next) => {
   try {
     const newBook = new Book({
@@ -37,6 +39,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+//Update book details by id
 router.put('/:id', async (req, res, next) => {
   try {
     const result = await Book.findByIdAndUpdate(req.params.id, req.body, {
@@ -48,6 +51,7 @@ router.put('/:id', async (req, res, next) => {
   }
 });
 
+//Delete book from database by id
 router.delete('/:id', async (req, res, next) => {
   try {
     const result = await Book.findByIdAndDelete(req.params.id);
